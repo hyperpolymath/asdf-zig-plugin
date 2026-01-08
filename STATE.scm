@@ -5,8 +5,8 @@
   (metadata
     (version "1.0.0")
     (schema-version "1.0")
-    (created "2025-01-08")
-    (updated "2025-01-08")
+    (created "2026-01-08")
+    (updated "2026-01-08")
     (project "asdf-zig-plugin")
     (repo "https://github.com/hyperpolymath/asdf-zig-plugin"))
 
@@ -17,7 +17,7 @@
 
   (current-position
     (phase "active")
-    (overall-completion 90)
+    (overall-completion 80)
     (components
       (list-all "complete")
       (download "complete")
@@ -44,5 +44,5 @@
 
   (critical-next-actions
     (immediate)
-    (this-week "Submit to asdf registry")
+    (this-week)
     (this-month)))

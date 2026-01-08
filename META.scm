@@ -22,4 +22,4 @@
 
   (design-rationale
     (why-asdf "Universal version manager with plugin ecosystem")
-    (why-zig "Systems programming language with no hidden control flow")))
+    (why-zig "Zig programming language")))

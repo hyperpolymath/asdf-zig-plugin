@@ -20,7 +20,7 @@
     (sibling-standard
       (name "zig")
       (relationship "managed-tool")
-      (url "https://ziglang.org")))
+      (url "https://ziglang.org/download/")))
 
   (what-this-is
     "An asdf plugin for managing Zig programming language versions")
