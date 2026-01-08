@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (c) 2024 hyperpolymath
+# asdf-zig: Install Zig to ASDF_INSTALL_PATH
+
+set -euo pipefail
+
+PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "${PLUGIN_DIR}/lib/utils.bash"
+
+install_zig() {
+  local install_type="${ASDF_INSTALL_TYPE:-version}"
+  local version="${ASDF_INSTALL_VERSION:-}"
+  local install_path="${ASDF_INSTALL_PATH:-}"
+  local download_path="${ASDF_DOWNLOAD_PATH:-}"
+
+  if [[ -z "${version}" ]]; then
+    fail "ASDF_INSTALL_VERSION is required"
+  fi
+
+  if [[ -z "${install_path}" ]]; then
+    fail "ASDF_INSTALL_PATH is required"
+  fi
+
+  if [[ "${install_type}" != "version" ]]; then
+    fail "asdf-zig only supports version installs, not refs"
+  fi
+
+  log_info "Installing Zig ${version}..."
+
+  # If download_path is not set, download here (for older asdf versions)
+  if [[ -z "${download_path}" ]] || [[ ! -d "${download_path}" ]]; then
+    download_path="${install_path}/tmp_download"
+    mkdir -p "${download_path}"
+
+    log_info "Downloading Zig ${version}..."
+    local download_url archive_file
+    download_url="$(get_download_url "${version}")"
+    archive_file="${download_path}/zig.tar.xz"
+
+    download_file "${download_url}" "${archive_file}" || fail "Failed to download Zig ${version}"
+    tar -xJf "${archive_file}" -C "${download_path}" --strip-components=1 || fail "Failed to extract archive"
+    rm -f "${archive_file}"
+  fi
+
+  mkdir -p "${install_path}"
+
+  log_info "Copying files to ${install_path}..."
+  cp -a "${download_path}/." "${install_path}/" || fail "Failed to copy files"
+
+  if [[ -d "${install_path}/tmp_download" ]]; then
+    rm -rf "${install_path}/tmp_download"
+  fi
+
+  local zig_path="${install_path}/zig"
+  if [[ ! -x "${zig_path}" ]]; then
+    fail "Installation failed: zig not found in ${install_path}"
+  fi
+
+  log_success "Zig ${version} installed successfully to ${install_path}"
+
+  log_info "Installed version:"
+  "${install_path}/zig" version 2>&1 || true
+}
+
+check_dependencies
+install_zig

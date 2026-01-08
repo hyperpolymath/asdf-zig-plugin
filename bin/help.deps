@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (c) 2024 hyperpolymath
+# asdf-zig: Help dependencies
+
+set -euo pipefail
+
+cat <<'EOF'
+Dependencies:
+- curl: For downloading Zig binaries
+- tar: For extracting archives (with xz support)
+- xz: For decompressing .tar.xz archives
+
+On Debian/Ubuntu: apt install curl tar xz-utils
+On Fedora: dnf install curl tar xz
+On macOS: brew install xz (curl and tar are pre-installed)
+EOF

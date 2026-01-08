@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (c) 2024 hyperpolymath
+# asdf-zig: Download Zig binary to ASDF_DOWNLOAD_PATH
+
+set -euo pipefail
+
+PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "${PLUGIN_DIR}/lib/utils.bash"
+
+download_zig() {
+  local install_type="${ASDF_INSTALL_TYPE:-version}"
+  local version="${ASDF_INSTALL_VERSION:-}"
+  local download_path="${ASDF_DOWNLOAD_PATH:-}"
+
+  if [[ -z "${version}" ]]; then
+    fail "ASDF_INSTALL_VERSION is required"
+  fi
+
+  if [[ -z "${download_path}" ]]; then
+    fail "ASDF_DOWNLOAD_PATH is required"
+  fi
+
+  if [[ "${install_type}" != "version" ]]; then
+    fail "asdf-zig only supports version installs, not refs"
+  fi
+
+  log_info "Downloading Zig ${version} for $(get_arch)-$(get_platform)..."
+
+  local download_url
+  download_url="$(get_download_url "${version}")"
+
+  log_info "URL: ${download_url}"
+
+  mkdir -p "${download_path}"
+
+  local archive_file="${download_path}/zig.tar.xz"
+
+  log_info "Downloading archive..."
+  download_file "${download_url}" "${archive_file}" || fail "Failed to download Zig ${version}"
+
+  log_info "Extracting archive..."
+  tar -xJf "${archive_file}" -C "${download_path}" --strip-components=1 || fail "Failed to extract archive"
+
+  rm -f "${archive_file}"
+
+  log_success "Download complete: ${download_path}"
+}
+
+check_dependencies
+download_zig

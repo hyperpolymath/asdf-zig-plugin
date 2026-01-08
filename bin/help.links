@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (c) 2024 hyperpolymath
+# asdf-zig: Help links
+
+set -euo pipefail
+
+cat <<'EOF'
+Useful Links:
+
+Zig Language:
+  - Homepage: https://ziglang.org/
+  - Documentation: https://ziglang.org/documentation/
+  - Downloads: https://ziglang.org/download/
+  - GitHub: https://github.com/ziglang/zig
+
+This Plugin:
+  - Repository: https://github.com/hyperpolymath/asdf-zig-plugin
+  - Issues: https://github.com/hyperpolymath/asdf-zig-plugin/issues
+
+asdf:
+  - Homepage: https://asdf-vm.com/
+  - Plugins: https://github.com/asdf-vm/asdf-plugins
+EOF

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Copyright (c) 2024 hyperpolymath
+# asdf-zig: Help overview
+
+set -euo pipefail
+
+cat <<'EOF'
+asdf-zig - Zig version manager plugin for asdf
+
+Zig is a general-purpose programming language and build system.
+It features:
+- No hidden control flow or memory allocations
+- First-class C interop
+- No garbage collector
+- Compile-time execution
+
+For more information, visit: https://ziglang.org/
+EOF
