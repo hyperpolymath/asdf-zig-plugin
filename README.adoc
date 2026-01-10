@@ -1,153 +1,164 @@
 = asdf-zig
 :toc: macro
-:toc-title:
 :toclevels: 3
+:icons: font
+:source-highlighter: rouge
+:experimental:
+:author: hyperpolymath
+:revnumber: 0.1.0
+:url-asdf: https://asdf-vm.com
+:url-zig: https://ziglang.org/
+:url-repo: https://github.com/hyperpolymath/asdf-zig-plugin
 
-image:https://img.shields.io/github/license/hyperpolymath/asdf-zig-plugin[License]
-image:https://github.com/hyperpolymath/asdf-zig-plugin/actions/workflows/ci.yml/badge.svg[CI Status]
-image:https://api.securityscorecards.dev/projects/github.com/hyperpolymath/asdf-zig-plugin/badge[OpenSSF Scorecard]
+image:https://img.shields.io/badge/license-PMPL--1.0-blue.svg[License,link="https://github.com/hyperpolymath/palimpsest-license"]
+image:https://img.shields.io/badge/Philosophy-Palimpsest-1f6feb.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-license"]
+image:https://img.shields.io/github/license/hyperpolymath/asdf-zig-plugin?style=flat-square[License,link=LICENSE]
+image:https://img.shields.io/github/v/release/hyperpolymath/asdf-zig-plugin?style=flat-square[Release,link={url-repo}/releases]
+image:https://img.shields.io/github/actions/workflow/status/hyperpolymath/asdf-zig-plugin/ci.yml?branch=main&style=flat-square[Build Status,link={url-repo}/actions]
+image:https://img.shields.io/badge/asdf-plugin-blue?style=flat-square[asdf Plugin,link={url-asdf}]
 
-asdf plugin for https://ziglang.org/[Zig], a general-purpose programming language and build system.
+[.lead]
+An {url-asdf}[asdf] plugin to install and manage {url-zig}[Zig] versions.
 
 toc::[]
 
-== What is Zig?
+== Overview
 
-Zig is a systems programming language that emphasizes:
+=== What is Zig?
 
-* **No hidden control flow** - No hidden memory allocations, implicit function calls, or hidden control flow
-* **C interoperability** - First-class C/C++ interop without requiring bindings
-* **Comptime** - Compile-time code execution and generics
-* **No garbage collector** - Manual memory management with safety features
-* **Cross-compilation** - Built-in cross-compilation to 50+ platforms
+Zig is a general-purpose systems programming language and build system focused
+on simplicity, safety, and performance. It provides explicit control over
+memory, compile-time execution, and cross-compilation without hidden runtime
+dependencies.
+
+=== What is asdf?
+
+{url-asdf}[asdf] is a universal version manager that allows you to manage
+multiple runtime versions with a single CLI tool.
+
+=== Why asdf-zig?
+
+[cols="1,3"]
+|===
+|Feature |Benefit
+
+|**Version Switching**
+|Switch between Zig versions per project
+
+|**Project Isolation**
+|Pin Zig per repository via `.tool-versions`
+
+|**Reproducible Builds**
+|Align CI toolchains with local development
+
+|**Cross-Platform**
+|Works on Linux and macOS, with Windows via WSL
+|===
 
 == Prerequisites
 
 === System Requirements
 
-* Linux (x86_64, aarch64, armv7a, x86), macOS (x86_64, aarch64), or Windows (x86_64)
-* curl
-* tar with xz support (or xz-utils)
-
-=== Install asdf
-
-[source,bash]
-----
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
-echo '. "$HOME/.asdf/asdf.sh"' >> ~/.bashrc
-source ~/.bashrc
-----
-
-== Installation
-
-=== Add the Plugin
-
-[source,bash]
-----
-asdf plugin add zig https://github.com/hyperpolymath/asdf-zig-plugin.git
-----
-
-=== Install Zig
-
-[source,bash]
-----
-# List available versions
-asdf list all zig
-
-# Install latest stable
-asdf install zig latest
-
-# Install specific version
-asdf install zig 0.13.0
-
-# Set global version
-asdf global zig 0.13.0
-
-# Set local version (per-project)
-asdf local zig 0.13.0
-----
-
-== Usage
-
-Once installed, use Zig normally:
-
-[source,bash]
-----
-# Check version
-zig version
-
-# Build a project
-zig build
-
-# Run a file
-zig run hello.zig
-
-# Format code
-zig fmt src/
-
-# Cross-compile
-zig build -Dtarget=x86_64-linux-gnu
-----
-
-=== Environment Variables
-
+[cols="1,2,3"]
 |===
-| Variable | Description | Default
+|Platform |Minimum Version |Notes
 
-| `ASDF_ZIG_SKIP_VERIFY`
-| Skip checksum verification
-| `false`
+|**Linux**
+|Ubuntu 20.04+ / Fedora 35+ / Debian 11+
+|x86_64 and aarch64 supported
 
-| `GITHUB_TOKEN`
-| GitHub API token for rate limiting
-| (none)
+|**macOS**
+|macOS 11+
+|Intel and Apple Silicon
+
+|**Windows**
+|Windows 10+ with WSL2
+|Native support planned
 |===
 
-== Supported Versions
-
-All official Zig releases from https://ziglang.org/download/ are supported:
-
-* Stable releases (e.g., 0.13.0, 0.12.0)
-* Master/nightly builds (use `master`)
-
-== Troubleshooting
-
-=== tar: xz: Cannot exec
-
-Install xz-utils:
+=== Dependencies
 
 [source,bash]
 ----
 # Debian/Ubuntu
-sudo apt install xz-utils
+sudo apt-get update
+sudo apt-get install -y curl git
 
-# Fedora
-sudo dnf install xz
+# Fedora/RHEL
+sudo dnf install -y curl git
 
-# macOS
-brew install xz
+# macOS (via Homebrew)
+brew install curl git
 ----
 
-=== Rate Limiting
-
-If you encounter GitHub rate limiting, set a token:
+=== asdf Installation
 
 [source,bash]
 ----
-export GITHUB_TOKEN=your_token_here
-asdf install zig latest
+# Clone asdf
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+
+# Add to your shell (bash)
+echo '. "$HOME/.asdf/asdf.sh"' >> ~/.bashrc
+echo '. "$HOME/.asdf/completions/asdf.bash"' >> ~/.bashrc
+
+# Reload your shell
+exec $SHELL
 ----
+
+== Installation
+
+=== Adding the Plugin
+
+[source,bash]
+----
+asdf plugin add zig https://github.com/hyperpolymath/asdf-zig-plugin.git
+asdf plugin list
+----
+
+=== Installing Zig Versions
+
+[source,bash]
+----
+asdf list all zig
+asdf install zig latest
+asdf install zig 0.13.0
+----
+
+=== Setting the Version
+
+[source,bash]
+----
+asdf global zig 0.13.0
+asdf local zig 0.13.0
+asdf current zig
+zig version
+----
+
+== Usage
+
+=== Project Configuration
+
+[source]
+----
+zig 0.13.0
+----
+
+== Configuration
+
+This plugin uses standard asdf behavior. No additional configuration is
+required.
+
+== Troubleshooting
+
+* Ensure `zig` is on PATH after installation.
+* Verify the installed version with `zig version`.
+* Reinstall if a cached release is corrupted.
 
 == Contributing
 
-See link:CONTRIBUTING.adoc[CONTRIBUTING.adoc] for guidelines.
+See link:CONTRIBUTING.adoc[CONTRIBUTING] for guidelines.
 
 == License
 
-This project is licensed under AGPL-3.0-or-later. See link:LICENSE[LICENSE] for details.
-
-== Related Projects
-
-* https://ziglang.org/[Zig Language]
-* https://asdf-vm.com/[asdf version manager]
-* https://github.com/hyperpolymath[Hyperpolymath asdf ecosystem]
+Palimpsest-MPL License v1.0 (PMPL-1.0)—see link:LICENSE[LICENSE].
