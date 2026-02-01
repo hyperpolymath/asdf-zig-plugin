@@ -10,8 +10,8 @@
 :url-zig: https://ziglang.org/
 :url-repo: https://github.com/hyperpolymath/asdf-zig-plugin
 
-image:https://img.shields.io/badge/license-PMPL--1.0-blue.svg[License,link="https://github.com/hyperpolymath/palimpsest-license"]
-image:https://img.shields.io/badge/Philosophy-Palimpsest-1f6feb.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-license"]
+image:https://img.shields.io/badge/License-PMPL--1.0-blue.svg[License: PMPL-1.0,link="https://github.com/hyperpolymath/palimpsest-license"]
+image:https://img.shields.io/badge/Philosophy-Palimpsest-indigo.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-license"]
 image:https://img.shields.io/github/license/hyperpolymath/asdf-zig-plugin?style=flat-square[License,link=LICENSE]
 image:https://img.shields.io/github/v/release/hyperpolymath/asdf-zig-plugin?style=flat-square[Release,link={url-repo}/releases]
 image:https://img.shields.io/github/actions/workflow/status/hyperpolymath/asdf-zig-plugin/ci.yml?branch=main&style=flat-square[Build Status,link={url-repo}/actions]
